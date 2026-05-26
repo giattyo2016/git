@@ -116,8 +116,30 @@ public class ArduinoSerialPOC : MonoBehaviour
             Debug.Log("Unity sees button up: " + ResolveButtonName(null));
         }
 
+        // === Unity -> Arduino LED ===
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            SendCommand("LED_ON");
+        }
+
+        if (Input.GetKeyDown(KeyCode.K))
+        {
+            SendCommand("LED_OFF");
+        }
+
+
 
     }
+
+    public void SendCommand(string command)
+    {
+        if (serialPort != null && serialPort.IsOpen)
+        {
+            serialPort.WriteLine(command);
+            Debug.Log("Sent: " + command);
+        }
+    }
+
 
     void ReadSerialLoop()
     {
